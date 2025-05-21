@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <!-- Main ScrollView -->
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavigation"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- App Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="32dp"
+                android:text="Planify"
+                android:textColor="#888888"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <!-- Page Title -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:text="Create New Category"
+                android:textColor="#333333"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Category Name Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Category Name"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/etCategoryName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/edit_text_background"
+                android:hint="Enter category name"
+                android:padding="16dp"
+                android:textColorHint="#CCCCCC"
+                android:textSize="16sp" />
+
+            <!-- Category Icon Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="Category Icon"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btnChooseIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/bg_button"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:text="Choose From Library"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <!-- Category Color Section -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="Category Color"
+                android:textColor="#666666"
+                android:textSize="14sp" />
+
+            <!-- Color Selection Grid -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="48dp"
+                android:gravity="start"
+                android:orientation="horizontal">
+
+                <!-- Color 1 - Dark Red -->
+                <ImageView
+                    android:id="@+id/color1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#8B2635"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Color 2 - Orange -->
+                <ImageView
+                    android:id="@+id/color2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#FF6B35"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Color 3 - Yellow -->
+                <ImageView
+                    android:id="@+id/color3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#F7B32B"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Color 4 - Teal -->
+                <ImageView
+                    android:id="@+id/color4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#1B998B"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Color 5 - Blue -->
+                <ImageView
+                    android:id="@+id/color5"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#2E86C1"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Color 6 - Light Purple -->
+                <ImageView
+                    android:id="@+id/color6"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#A569BD"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Color 7 - Pink -->
+                <ImageView
+                    android:id="@+id/color7"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#E91E63"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <!-- Color 8 - Magenta -->
+                <ImageView
+                    android:id="@+id/color8"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/color_circle"
+                    android:backgroundTint="#C71585"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
+
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <!-- Cancel Button -->
+                <Button
+                    android:id="@+id/btnCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_cancel"
+                    android:padding="12dp"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="#666666"
+                    android:textSize="16sp" />
+
+                <!-- Create Category Button -->
+                <Button
+                    android:id="@+id/btnCreateCategory"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_button"
+                    android:padding="12dp"
+                    android:text="Create Category"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#E2D0F1"
+        android:orientation="vertical"
+        android:paddingTop="22dp"
+        android:paddingBottom="22dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:contentDescription="Home"
+                android:src="@drawable/ic_home_black" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:contentDescription="Calendar"
+                android:src="@drawable/ic_calendar" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:contentDescription="Focus Time"
+                android:src="@drawable/ic_focus" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:contentDescription="Category"
+                android:src="@drawable/ic_category_white" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:contentDescription="Settings"
+                android:src="@drawable/ic_settings" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
