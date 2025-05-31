@@ -1,56 +1,51 @@
 package com.example.todoist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.todoist.ui.theme.TodoistTheme
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var firebaseAuth: FirebaseAuth
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Check if user is logged in
+        firebaseAuth = FirebaseAuth.getInstance()
+
+        // Cek status login via SharedPreferences
         val loginStatusPref = getSharedPreferences("LOGIN_STATUS", MODE_PRIVATE)
         val isLoggedIn = loginStatusPref.getBoolean("IS_LOGGED_IN", false)
 
-        if (!isLoggedIn) {
-            // If not logged in, redirect to LoginActivity
+        if (!isLoggedIn || firebaseAuth.currentUser == null) {
             navigateToLogin()
             return
         }
 
-        // Get current username
+        // Ambil username dari SharedPreferences
         val username = loginStatusPref.getString("CURRENT_USER", "User")
 
-        // Display welcome message
-        val welcomeText = findViewById<TextView>(R.id.textViewWelcome)
+        val welcomeText = findViewById<TextView>(R.id.tvUsername)
         welcomeText.text = "Welcome, $username!"
 
-        // Set up logout button
         val logoutButton = findViewById<Button>(R.id.buttonLogout)
         logoutButton.setOnClickListener {
-            // Clear login status
+            // Logout dari Firebase
+            firebaseAuth.signOut()
+
+            // Clear local login status
             with(loginStatusPref.edit()) {
                 putBoolean("IS_LOGGED_IN", false)
                 putString("CURRENT_USER", "")
                 apply()
             }
 
-            // Navigate to login
             navigateToLogin()
         }
     }

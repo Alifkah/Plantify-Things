@@ -4,28 +4,31 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todoist.databinding.ActivityRegisterBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Set up click listener for login button (which is used for registration in this screen)
+        firebaseAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+
         binding.buttonLogin.setOnClickListener {
             registerUser()
         }
 
-        // Set up click listener for login text
         binding.textViewLogin.setOnClickListener {
-            // Navigate back to LoginActivity
             finish()
         }
 
-        // Set up back button click listener
         binding.imageViewLogo.setOnClickListener {
             finish()
         }
@@ -36,7 +39,6 @@ class RegisterActivity : AppCompatActivity() {
         val password = binding.editTextPassword.text.toString().trim()
         val confirmPassword = binding.editTextConfirmPassword.text.toString().trim()
 
-        // Validate inputs
         if (username.isEmpty()) {
             binding.editTextUsername.error = "Username is required"
             binding.editTextUsername.requestFocus()
@@ -61,32 +63,54 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        // Password length validation
         if (password.length < 6) {
             binding.editTextPassword.error = "Password should be at least 6 characters"
             binding.editTextPassword.requestFocus()
             return
         }
 
-        // Store credentials in SharedPreferences
-        val sharedPref = getSharedPreferences("USER_CREDENTIALS", MODE_PRIVATE)
+        // Gunakan username untuk membuat email dummy: username@example.com
+        val email = "$username@example.com"
 
-        // Check if username already exists
-        if (sharedPref.contains(username)) {
-            binding.editTextUsername.error = "Username already exists"
-            binding.editTextUsername.requestFocus()
-            return
-        }
+        // Cek apakah username sudah digunakan
+        firestore.collection("users")
+            .whereEqualTo("username", username)
+            .get()
+            .addOnSuccessListener { documents ->
+                if (!documents.isEmpty) {
+                    binding.editTextUsername.error = "Username already exists"
+                    binding.editTextUsername.requestFocus()
+                    return@addOnSuccessListener
+                }
 
-        // Save the new user
-        with(sharedPref.edit()) {
-            putString(username, password)
-            apply()
-        }
+                // Buat akun di Firebase Authentication
+                firebaseAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnSuccessListener {
+                        val uid = it.user?.uid ?: return@addOnSuccessListener
 
-        Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                        // Simpan username & email di Firestore
+                        val userMap = hashMapOf(
+                            "username" to username,
+                            "email" to email
+                        )
 
-        // Navigate back to login screen
-        finish()
+                        firestore.collection("users")
+                            .document(uid)
+                            .set(userMap)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show()
+                                finish()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Failed to save user data: ${e.message}", Toast.LENGTH_LONG).show()
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
+                    }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Error checking username: ${it.message}", Toast.LENGTH_LONG).show()
+            }
     }
 }
